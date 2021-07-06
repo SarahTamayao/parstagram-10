@@ -16,20 +16,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="fIg-8e-MOj">
-                                <rect key="frame" x="19.5" y="260.5" width="375" height="375"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instagram" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jRz-df-owV">
+                                <rect key="frame" x="106.5" y="405" width="201" height="86"/>
+                                <fontDescription key="fontDescription" name="SavoyeLetPlain" family="Savoye LET" pointSize="72"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="launchLogo" translatesAutoresizingMaskIntoConstraints="NO" id="6g2-eZ-oBF">
+                                <rect key="frame" x="167" y="305" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="fIg-8e-MOj" secondAttribute="height" multiplier="1:1" id="p9s-aP-HXw"/>
+                                    <constraint firstAttribute="height" constant="80" id="6Ce-sH-oCz"/>
+                                    <constraint firstAttribute="width" constant="80" id="Zs7-3d-plH"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="fIg-8e-MOj" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="GOZ-iv-sR5"/>
-                            <constraint firstItem="fIg-8e-MOj" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="S4f-th-D8V"/>
-                            <constraint firstItem="fIg-8e-MOj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="19.5" id="qwO-l9-jHn"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fIg-8e-MOj" secondAttribute="trailing" constant="19.5" id="ryB-uW-8tn"/>
+                            <constraint firstItem="jRz-df-owV" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="oEN-vG-Nsa"/>
+                            <constraint firstItem="6g2-eZ-oBF" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="pKQ-JP-FF4"/>
+                            <constraint firstItem="jRz-df-owV" firstAttribute="top" secondItem="6g2-eZ-oBF" secondAttribute="bottom" constant="20" id="uMS-id-mbq"/>
+                            <constraint firstItem="jRz-df-owV" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="uvX-Rd-4ha"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -39,7 +46,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="image_placeholder" width="375" height="375"/>
+        <image name="launchLogo" width="1263" height="1263"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

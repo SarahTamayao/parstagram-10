@@ -195,11 +195,12 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sP4-0Q-DlQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="nOy-YJ-WnU" firstAttribute="top" secondItem="sP4-0Q-DlQ" secondAttribute="top" constant="20" id="Jd8-rs-Hga"/>
                             <constraint firstItem="FKF-aY-Jp6" firstAttribute="bottom" secondItem="nOy-YJ-WnU" secondAttribute="bottom" id="b4l-57-ycA"/>
@@ -208,10 +209,21 @@
                             <constraint firstItem="nOy-YJ-WnU" firstAttribute="leading" secondItem="sP4-0Q-DlQ" secondAttribute="leading" constant="20" id="hPk-JR-NQu"/>
                             <constraint firstItem="FKF-aY-Jp6" firstAttribute="leading" secondItem="nOy-YJ-WnU" secondAttribute="trailing" constant="10" id="w0e-hQ-arg"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="qdp-zU-k7Z" appends="YES" id="vbe-lI-d1n"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Create Post" id="SJd-Or-Kes">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="xmark" catalog="system" id="1X6-o7-Tyo"/>
-                        <barButtonItem key="rightBarButtonItem" title="Share" id="S3I-gp-mAI"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="xmark" catalog="system" id="1X6-o7-Tyo">
+                            <connections>
+                                <action selector="onExitCreate:" destination="Yn7-lP-eTI" id="Zhk-P1-ov3"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Share" id="S3I-gp-mAI">
+                            <connections>
+                                <action selector="sendPost:" destination="Yn7-lP-eTI" id="dVb-SQ-Nmz"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="captionText" destination="FKF-aY-Jp6" id="Hqx-Eu-NdR"/>
@@ -223,6 +235,11 @@
                 <tapGestureRecognizer id="uHK-XD-FNR">
                     <connections>
                         <action selector="onTapImage:" destination="Yn7-lP-eTI" id="gEO-km-4UI"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="qdp-zU-k7Z">
+                    <connections>
+                        <action selector="onTap:" destination="Yn7-lP-eTI" id="wGO-kY-Vi4"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -237,6 +254,11 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="selectedIndex">
+                            <integer key="value" value="0"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="U3X-mt-Ni8" kind="relationship" relationship="viewControllers" id="0k6-dO-8gJ"/>
                         <segue destination="sn5-WE-d4R" kind="relationship" relationship="viewControllers" id="CLD-aP-4FB"/>
