@@ -29,25 +29,17 @@
     [self.likeButton setImage:[UIImage systemImageNamed:@"heart.fill" withConfiguration:defaultConfig] forState:UIControlStateSelected];
 }
 
-/* from Post.h
- @property (nonatomic, strong) NSString *postID;
- @property (nonatomic, strong) NSString *userID;
- @property (nonatomic, strong) PFUser *author;
-
- @property (nonatomic, strong) NSString *caption;
- @property (nonatomic, strong) PFFileObject *image;
- @property (nonatomic, strong) NSNumber *likeCount;
- @property (nonatomic, strong) NSNumber *commentCount;
- */
-
 - (void)setPost:(Post *)post { // custom setter so PostCell can be reused
     _post = post;
     
-    NSLog(@"Setting post! Post = %@", post);
+//    NSLog(@"Setting post! Post = %@", post);
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.usernameLabel.text = post.author.username;
     self.likesLabel.text = [[NSString stringWithFormat:@"%@", post.likeCount] stringByAppendingString:@" likes"];
     self.captionLabel.text = post.caption; // how to have bold within??
     self.pfpView.layer.cornerRadius = 17;
+    self.likeButton.selected = post.liked;
+    self.timestampLabel.text = [post.createdAt timeAgoSinceNow];
     
     PFFileObject *img = post.image;
     [img getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
@@ -58,6 +50,37 @@
             [self.pictureView setImage:postImg];
         }
     }];
+}
+
+- (void)refreshData {
+    self.likesLabel.text = [[NSString stringWithFormat:@"%@", self.post.likeCount] stringByAppendingString:@" likes"];
+}
+
+- (IBAction)tapLike:(id)sender {
+    if (self.post.liked) { // unlike it
+        self.post.liked = false;
+        self.likeButton.selected = false;
+        self.post.likeCount = [NSNumber numberWithInt:[self.post.likeCount intValue]-1];
+        [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                NSLog(@"Unliked post");
+            } else {
+                NSLog(@"Error unliking post: %@", error.localizedDescription);
+            }
+        }];
+    } else { // like it
+        self.post.liked = true;
+        self.likeButton.selected = true;
+        self.post.likeCount = [NSNumber numberWithInt:[self.post.likeCount intValue]+1];
+        [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                NSLog(@"Liked post");
+            } else {
+                NSLog(@"Error liking post: %@", error.localizedDescription);
+            }
+        }];
+    }
+    [self refreshData]; // updates cell UI
 }
 
 @end
