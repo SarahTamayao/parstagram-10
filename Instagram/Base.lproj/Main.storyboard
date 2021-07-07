@@ -213,9 +213,9 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="asymptotebag this is a caption" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IlE-Xc-C9a">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="this is a caption" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IlE-Xc-C9a">
                                                     <rect key="frame" x="12" y="540" width="390" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -233,6 +233,7 @@
                                                 <constraint firstItem="fKl-g3-1VE" firstAttribute="leading" secondItem="zd3-DA-15J" secondAttribute="trailing" constant="12" id="68Y-2N-LCv"/>
                                                 <constraint firstAttribute="trailing" secondItem="UsY-1C-Wsf" secondAttribute="trailing" constant="10" id="6Dw-Sy-zEO"/>
                                                 <constraint firstAttribute="trailing" secondItem="UBy-Ap-Qap" secondAttribute="trailing" constant="10" id="8CU-bj-3Gi"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Z9G-ht-7bO" secondAttribute="bottom" constant="10" id="F86-gl-X3D"/>
                                                 <constraint firstItem="IlE-Xc-C9a" firstAttribute="trailing" secondItem="d6Q-Wd-XEN" secondAttribute="trailing" id="GAh-0H-awh"/>
                                                 <constraint firstItem="JJI-1S-T8Y" firstAttribute="leading" secondItem="IZ3-gI-uBv" secondAttribute="leading" constant="10" id="LYI-6n-BGQ"/>
                                                 <constraint firstItem="YFj-U5-pnD" firstAttribute="top" secondItem="8Kr-e2-y2q" secondAttribute="bottom" constant="10" id="M0P-Ob-Kj4"/>
@@ -262,6 +263,7 @@
                                             <outlet property="likeButton" destination="JJI-1S-T8Y" id="heH-Av-MiM"/>
                                             <outlet property="likesLabel" destination="d6Q-Wd-XEN" id="CeQ-OR-XJG"/>
                                             <outlet property="pfpView" destination="8Kr-e2-y2q" id="7IF-Xi-bPz"/>
+                                            <outlet property="pictureView" destination="YFj-U5-pnD" id="mEv-68-GOA"/>
                                             <outlet property="saveButton" destination="e74-1I-8Yv" id="GLY-sg-NUH"/>
                                             <outlet property="sendButton" destination="fKl-g3-1VE" id="f2L-px-5RJ"/>
                                             <outlet property="timestampLabel" destination="Z9G-ht-7bO" id="z4f-0B-fte"/>
@@ -287,6 +289,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="eTN-tI-dok" id="TrF-rF-FcN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RJj-BD-S3X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
