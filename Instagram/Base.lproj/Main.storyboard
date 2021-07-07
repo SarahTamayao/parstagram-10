@@ -269,11 +269,11 @@
             </objects>
             <point key="canvasLocation" x="-329" y="-3"/>
         </scene>
-        <!--Post-->
+        <!--Create-->
         <scene sceneID="5Td-9x-2I0">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sn5-WE-d4R" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Post" image="insta_camera_btn" id="l81-FE-mXp"/>
+                    <tabBarItem key="tabBarItem" title="Create" image="insta_camera_btn" id="l81-FE-mXp"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="OPb-s8-L32">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

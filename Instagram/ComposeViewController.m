@@ -26,6 +26,7 @@
     [self.pictureView setUserInteractionEnabled:YES];
     [self.pictureView addGestureRecognizer:self.tapGesture];
     self.captionText.delegate = self;
+    self.image = nil;
     // set up placeholder text
     self.captionText.text = @"Write a caption...";
     self.captionText.textColor = [UIColor lightGrayColor];
@@ -53,14 +54,26 @@
 
     // The Xcode simulator does not support taking pictures, so let's first check that the camera is indeed supported on the device before trying to present it.
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
-    }
-    else {
-        NSLog(@"Camera 🚫 available so we will use photo library instead");
+        // camera is available
+        UIAlertController *sourcePicker = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *pickCamera = [UIAlertAction actionWithTitle:@"Take picture" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+            [self presentViewController:imagePickerVC animated:YES completion:nil];
+        }];
+        UIAlertAction *pickLibrary = [UIAlertAction actionWithTitle:@"Select from photo library" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self presentViewController:imagePickerVC animated:YES completion:nil];
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}];
+        [sourcePicker addAction:pickCamera];
+        [sourcePicker addAction:pickLibrary];
+        [sourcePicker addAction:cancelAction];
+        [self presentViewController:sourcePicker animated:YES completion:^{}];
+    } else {
+        NSLog(@"Camera unavailable so we will use photo library instead");
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:imagePickerVC animated:YES completion:nil];
     }
-
-    [self presentViewController:imagePickerVC animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info {
@@ -94,6 +107,12 @@
     if ([self.captionText.text length] > 2200) { // limit for insta captions is 2200 chars
         NSLog(@"Caption too long!");
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot create post" message:@"Caption is above the 2200-character limit." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}];
+        [alert addAction:dismissAction];
+        [self presentViewController:alert animated:YES completion:^{}];
+    } else if (self.image == nil) {
+        NSLog(@"Image not set!");
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot create post" message:@"An image has not been selected." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}];
         [alert addAction:dismissAction];
         [self presentViewController:alert animated:YES completion:^{}];
