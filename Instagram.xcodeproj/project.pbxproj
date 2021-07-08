@@ -26,6 +26,8 @@
 		7CEB38052696539B0041B40A /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CEB38042696539B0041B40A /* DetailsViewController.m */; };
 		7CEB3808269745BE0041B40A /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CEB3807269745BE0041B40A /* ProfileViewController.m */; };
 		7CEB380E26976A620041B40A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CEB380D26976A620041B40A /* User.m */; };
+		7CEB3811269777B80041B40A /* PostGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CEB3810269777B80041B40A /* PostGridCell.m */; };
+		7CEB3814269794070041B40A /* ProfileHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CEB3813269794070041B40A /* ProfileHeaderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +82,10 @@
 		7CEB3807269745BE0041B40A /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		7CEB380C26976A620041B40A /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = User.h; path = Instagram/ViewControllers/User.h; sourceTree = SOURCE_ROOT; };
 		7CEB380D26976A620041B40A /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Instagram/ViewControllers/User.m; sourceTree = SOURCE_ROOT; };
+		7CEB380F269777B80041B40A /* PostGridCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PostGridCell.h; path = Instagram/ViewControllers/PostGridCell.h; sourceTree = SOURCE_ROOT; };
+		7CEB3810269777B80041B40A /* PostGridCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PostGridCell.m; path = Instagram/ViewControllers/PostGridCell.m; sourceTree = SOURCE_ROOT; };
+		7CEB3812269794070041B40A /* ProfileHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileHeaderView.h; sourceTree = SOURCE_ROOT; };
+		7CEB3813269794070041B40A /* ProfileHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileHeaderView.m; sourceTree = SOURCE_ROOT; };
 		81593547AA4312CA4B11F47E /* Pods-Instagram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.debug.xcconfig"; path = "Target Support Files/Pods-Instagram/Pods-Instagram.debug.xcconfig"; sourceTree = "<group>"; };
 		902B6C94B475956F674C5FD1 /* Pods-Instagram-InstagramUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram-InstagramUITests.debug.xcconfig"; path = "Target Support Files/Pods-Instagram-InstagramUITests/Pods-Instagram-InstagramUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9E0E070AB6F7C90C2777E4C9 /* Pods-InstagramTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramTests.release.xcconfig"; path = "Target Support Files/Pods-InstagramTests/Pods-InstagramTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -189,6 +195,10 @@
 		7CEB37F72694E8B70041B40A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7CEB3812269794070041B40A /* ProfileHeaderView.h */,
+				7CEB3813269794070041B40A /* ProfileHeaderView.m */,
+				7CEB380F269777B80041B40A /* PostGridCell.h */,
+				7CEB3810269777B80041B40A /* PostGridCell.m */,
 				7CEB37F92694F55A0041B40A /* PostCell.h */,
 				7CEB37FA2694F55A0041B40A /* PostCell.m */,
 			);
@@ -478,9 +488,11 @@
 				7CEB3782269493C40041B40A /* main.m in Sources */,
 				7CEB3774269493C20041B40A /* SceneDelegate.m in Sources */,
 				7CEB3808269745BE0041B40A /* ProfileViewController.m in Sources */,
+				7CEB3811269777B80041B40A /* PostGridCell.m in Sources */,
 				7CEB37FE2694FE350041B40A /* ComposeViewController.m in Sources */,
 				7CEB380E26976A620041B40A /* User.m in Sources */,
 				7CEB37A62694A59B0041B40A /* LoginViewController.m in Sources */,
+				7CEB3814269794070041B40A /* ProfileHeaderView.m in Sources */,
 				7CEB38052696539B0041B40A /* DetailsViewController.m in Sources */,
 				7CEB37FB2694F55A0041B40A /* PostCell.m in Sources */,
 				7CEB380226950BBF0041B40A /* Post.m in Sources */,

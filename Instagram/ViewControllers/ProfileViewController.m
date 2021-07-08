@@ -7,15 +7,22 @@
 
 #import "ProfileViewController.h"
 #import "ComposeViewController.h"
+#import "ProfileHeaderView.h"
+#import "Post.h"
+#import "PostGridCell.h"
 #import <Parse/Parse.h>
 
-@interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-@property (weak, nonatomic) IBOutlet UIImageView *pfpView;
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *postCountLabel;
+@interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+//@property (weak, nonatomic) IBOutlet UIImageView *pfpView;
+//@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *postCountLabel;
+
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+//@property (weak, nonatomic) IBOutlet ProfileHeaderView *profileHeader;
 @property (strong, nonatomic) NSArray *posts;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapGesture;
+@property (weak, nonatomic) IBOutlet UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic) CGSize postSize;
 
 @end
 
@@ -24,26 +31,50 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupView];
+    [self fetchUserPosts];
 }
 
 - (void)setupView {
     self.user = [PFUser currentUser];
+    self.posts = @[];
     
-    self.usernameLabel.text = self.user.username;
+    // setup collection view
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    self.flowLayout.minimumLineSpacing = 1;
+    self.flowLayout.minimumInteritemSpacing = 1;
+    CGFloat postsPerLine = 3;
+//    CGFloat width = (self.collectionView.frame.size.width - self.flowLayout.minimumInteritemSpacing*(postsPerLine - 1))/postsPerLine;
+    CGFloat width = floorf((self.collectionView.frame.size.width - self.flowLayout.minimumInteritemSpacing*(postsPerLine - 1))/postsPerLine);
+    NSLog(@"item width should be %f", width);
+    CGFloat height = width;
+    CGSize picSize = CGSizeMake(width, height);
+    self.flowLayout.itemSize = picSize;
+    self.postSize = picSize;
+    self.flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+}
+
+- (void)fetchUserPosts {
+    // construct PFQuery
+    PFQuery *postQuery = [Post query];
+    [postQuery whereKey:@"author" equalTo:self.user];
+    [postQuery orderByDescending:@"createdAt"];
     
-    PFFileObject *pfp = self.user.pfp;
-    [pfp getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"Error fetching profile pic: %@", error.localizedDescription);
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable posts, NSError * _Nullable error) {
+        if (posts) {
+            self.posts = posts;
+            [self.collectionView reloadData];
+//            self.profileHeader.postCountLabel.text = [NSString stringWithFormat:@"%i", self.posts.count];
         } else {
-            UIImage *pfpImg = [UIImage imageWithData:data];
-            [self.pfpView setImage:pfpImg];
-            self.pfpView.layer.cornerRadius = self.pfpView.frame.size.height/2;
+            NSLog(@"Error fetching this user's posts: %@", error.localizedDescription);
         }
     }];
-    
-    [self.pfpView setUserInteractionEnabled:YES];
-    [self.pfpView addGestureRecognizer:self.tapGesture];
 }
 
 - (IBAction)onTapPfp:(id)sender {
@@ -81,10 +112,11 @@
     // need to actually change user pfp in parse database
     CGSize size = CGSizeMake(250, 250);
     UIImage *pfpImg = [self resizeImage:editedImage withSize:size];
-    [self.pfpView setImage:pfpImg];
+//    [self.profileHeader.pfpView setImage:pfpImg];
     [User changeUserPfp:self.user withPfp:pfpImg completion:nil];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+    [self.collectionView reloadData];
 }
 
 - (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
@@ -100,6 +132,41 @@
     
     return newImage;
 }
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.posts.count;
+}
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    PostGridCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PostGridCell" forIndexPath:indexPath];
+    cell.post = self.posts[indexPath.item];
+    cell.postSize = self.postSize;
+    return cell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    ProfileHeaderView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ProfileHeaderView" forIndexPath:indexPath];
+    header.usernameLabel.text = self.user.username;
+    header.postCountLabel.text = [NSString stringWithFormat:@"%lu", self.posts.count];
+    [header.pfpView setUserInteractionEnabled:YES];
+    [header.pfpView addGestureRecognizer:self.tapGesture];
+    
+    PFFileObject *pfp = self.user.pfp;
+    [pfp getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"error");
+        } else {
+            UIImage *pfpImg = [UIImage imageWithData:data];
+            [header.pfpView setImage:pfpImg];
+            header.pfpView.layer.cornerRadius = header.pfpView.frame.size.height/2;
+        }
+    }];
+    return header;
+}
+
+//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+//    return 1;
+//}
 
 /*
 #pragma mark - Navigation
