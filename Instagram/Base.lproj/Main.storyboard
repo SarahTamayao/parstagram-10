@@ -533,19 +533,23 @@
         <!--Profile-->
         <scene sceneID="Q7P-Ly-SfY">
             <objects>
-                <viewController id="ZM6-BP-Hxj" sceneMemberID="viewController">
+                <viewController id="ZM6-BP-Hxj" customClass="ProfileViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="A9L-Ne-akv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="zpJ-8y-Q4Z">
                                 <rect key="frame" x="25" y="113" width="150" height="150"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="FBi-Q4-oL9"/>
                                     <constraint firstAttribute="height" constant="150" id="XAg-0B-Q8P"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="uOD-J1-lWZ" appends="YES" id="xho-tp-fj9"/>
+                                </connections>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="asymptotebag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CBO-lC-X5J">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CBO-lC-X5J">
                                 <rect key="frame" x="200" y="148" width="199" height="34"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="28"/>
                                 <nil key="textColor"/>
@@ -608,8 +612,20 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="aki-x8-glA"/>
+                    <connections>
+                        <outlet property="collectionView" destination="qIs-V8-9T8" id="NSe-cn-8MZ"/>
+                        <outlet property="pfpView" destination="zpJ-8y-Q4Z" id="icK-tp-WCU"/>
+                        <outlet property="postCountLabel" destination="EWO-qs-T1B" id="m3t-pV-jTm"/>
+                        <outlet property="tapGesture" destination="uOD-J1-lWZ" id="klb-QM-Xn9"/>
+                        <outlet property="usernameLabel" destination="CBO-lC-X5J" id="Bpa-5Q-B8B"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zXq-Zk-ayK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="uOD-J1-lWZ">
+                    <connections>
+                        <action selector="onTapPfp:" destination="ZM6-BP-Hxj" id="6FF-Pc-T0h"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="356.52173913043481" y="1415.625"/>
         </scene>

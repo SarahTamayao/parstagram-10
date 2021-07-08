@@ -37,9 +37,19 @@
     self.usernameLabel.text = post.author.username;
     self.likesLabel.text = [[NSString stringWithFormat:@"%@", post.likeCount] stringByAppendingString:@" likes"];
     self.captionLabel.text = post.caption; // how to have bold within??
-    self.pfpView.layer.cornerRadius = 17;
     self.likeButton.selected = post.liked;
     self.timestampLabel.text = [post.createdAt timeAgoSinceNow];
+    
+    PFFileObject *pfp = post.author.pfp;
+    [pfp getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Error fetching profile pic: %@", error.localizedDescription);
+        } else {
+            UIImage *pfpImg = [UIImage imageWithData:data];
+            [self.pfpView setImage:pfpImg];
+            self.pfpView.layer.cornerRadius = self.pfpView.frame.size.height/2;
+        }
+    }];
     
     PFFileObject *img = post.image;
     [img getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
