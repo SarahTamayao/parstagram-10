@@ -28,14 +28,14 @@ The following **optional** features are implemented:
   - [ ] Tapping on a post's username or profile photo goes to that user's profile page
 - [ ] After the user submits a new post, show a progress HUD while the post is being uploaded to Parse
 - [ ] User can comment on a post and see all comments for each post in the post details screen.
-- [x] User can like a post and see number of likes for each post in the post details screen.
-- [ ] Style the login page to look like the real Instagram login page.
+- [ ] User can like a post and see number of likes for each post in the post details screen.
+- [x] Style the login page to look like the real Instagram login page.
 - [x] Style the feed to look like the real Instagram feed.
 - [ ] Implement a custom camera view.
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [x] A center progress HUD shows only the *first* time the feed is loaded, and not when pulling to refresh afterward.
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 

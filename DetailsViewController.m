@@ -35,7 +35,7 @@
     [self.likeButton setImage:[UIImage systemImageNamed:@"heart" withConfiguration:defaultConfig] forState:UIControlStateNormal];
     [self.likeButton setImage:[UIImage systemImageNamed:@"heart.fill" withConfiguration:defaultConfig] forState:UIControlStateSelected];
     
-    self.likeButton.selected = self.post.liked;
+    self.likeButton.selected = [self.post.likedBy containsObject:[PFUser currentUser].username];
     self.likeCountLabel.text = [[NSString stringWithFormat:@"%@", self.post.likeCount] stringByAppendingString:@" likes"];
     self.captionLabel.text = self.post.caption;
     
@@ -63,8 +63,8 @@
 }
 
 - (IBAction)tapLike:(id)sender {
-    if (self.post.liked) { // unlike it
-        self.post.liked = false;
+    if ([self.post.likedBy containsObject:[PFUser currentUser].username]) { // unlike it
+        [self.post.likedBy removeObject:[PFUser currentUser].username];
         self.likeButton.selected = false;
         self.post.likeCount = [NSNumber numberWithInt:[self.post.likeCount intValue]-1];
         [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
@@ -75,7 +75,8 @@
             }
         }];
     } else { // like it
-        self.post.liked = true;
+        NSLog(@"Current user: %@", [PFUser currentUser].username);
+        [self.post.likedBy addObject:[PFUser currentUser].username];
         self.likeButton.selected = true;
         self.post.likeCount = [NSNumber numberWithInt:[self.post.likeCount intValue]+1];
         [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {

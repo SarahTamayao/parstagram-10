@@ -4,11 +4,13 @@
 target 'Instagram' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+  inhibit_all_warnings!
 
   # Pods for Instagram
   pod 'Parse'
   pod 'AFNetworking'
   pod 'DateTools'
+  pod 'MBProgressHUD'
 
   target 'InstagramTests' do
     inherit! :search_paths

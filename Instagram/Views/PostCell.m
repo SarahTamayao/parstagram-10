@@ -37,7 +37,7 @@
     self.usernameLabel.text = post.author.username;
     self.likesLabel.text = [[NSString stringWithFormat:@"%@", post.likeCount] stringByAppendingString:@" likes"];
     self.captionLabel.text = post.caption; // how to have bold within??
-    self.likeButton.selected = post.liked;
+    self.likeButton.selected = [post.likedBy containsObject:[PFUser currentUser].username];
     self.timestampLabel.text = [post.createdAt timeAgoSinceNow];
     
     PFFileObject *pfp = post.author.pfp;
@@ -67,8 +67,8 @@
 }
 
 - (IBAction)tapLike:(id)sender {
-    if (self.post.liked) { // unlike it
-        self.post.liked = false;
+    if ([self.post.likedBy containsObject:[PFUser currentUser].username]) { // unlike it
+        [self.post.likedBy removeObject:[PFUser currentUser].username];
         self.likeButton.selected = false;
         self.post.likeCount = [NSNumber numberWithInt:[self.post.likeCount intValue]-1];
         [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
@@ -79,7 +79,9 @@
             }
         }];
     } else { // like it
-        self.post.liked = true;
+        NSLog(@"Current user: %@", [PFUser currentUser].username);
+        [self.post.likedBy addObject:[PFUser currentUser].username];
+        NSLog(@"self.post.likedBy = %@", self.post.likedBy);
         self.likeButton.selected = true;
         self.post.likeCount = [NSNumber numberWithInt:[self.post.likeCount intValue]+1];
         [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {

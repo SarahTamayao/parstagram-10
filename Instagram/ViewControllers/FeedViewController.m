@@ -12,6 +12,7 @@
 #import "SceneDelegate.h"
 #import <Parse/Parse.h>
 #import <QuartzCore/QuartzCore.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 #import "PostCell.h"
 #import "Post.h"
 
@@ -19,12 +20,14 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) NSArray *posts;
+@property (nonatomic) BOOL loadedOnce;
 @end
 
 @implementation FeedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.loadedOnce = false;
     [self setupView];
     [self fetchPosts];
 }
@@ -52,6 +55,10 @@
 }
 
 - (void)fetchPosts { // get feed
+    if (!self.loadedOnce) { // first time loading
+        [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    }
+    
     // construct PFQuery
     PFQuery *postQuery = [Post query];
     [postQuery orderByDescending:@"createdAt"];
@@ -65,6 +72,8 @@
             self.posts = posts;
             [self.tableView reloadData];
             [self.refreshControl endRefreshing];
+            [MBProgressHUD hideHUDForView:self.view animated:true];
+            self.loadedOnce = true;
         }
         else {
             NSLog(@"Error fetching posts: %@", error.localizedDescription);
