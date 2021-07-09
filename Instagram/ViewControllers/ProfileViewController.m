@@ -52,7 +52,7 @@
     CGFloat postsPerLine = 3;
 //    CGFloat width = (self.collectionView.frame.size.width - self.flowLayout.minimumInteritemSpacing*(postsPerLine - 1))/postsPerLine;
     CGFloat width = floorf((self.collectionView.frame.size.width - self.flowLayout.minimumInteritemSpacing*(postsPerLine - 1))/postsPerLine);
-    NSLog(@"item width should be %f", width);
+//    NSLog(@"item width should be %f", width);
     CGFloat height = width;
     CGSize picSize = CGSizeMake(width, height);
     self.flowLayout.itemSize = picSize;

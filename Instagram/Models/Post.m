@@ -27,7 +27,7 @@
     newPost.image = [self getPFFileFromImage:image];
     newPost.author = [PFUser currentUser];
     newPost.caption = caption;
-    newPost.likedBy = @[];
+    newPost.likedBy = [[NSMutableArray alloc] init];
     newPost.likeCount = @(0);
     newPost.commentCount = @(0);
     [newPost saveInBackgroundWithBlock:completion];
