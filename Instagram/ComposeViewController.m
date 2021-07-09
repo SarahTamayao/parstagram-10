@@ -9,6 +9,7 @@
 #import "FeedViewController.h"
 #import "SceneDelegate.h"
 #import <Parse/Parse.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 #import "Post.h"
 
 @interface ComposeViewController () <UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -48,6 +49,7 @@
 
 - (IBAction)onTapImage:(id)sender {
     NSLog(@"image tapped!");
+    [MBProgressHUD showHUDAddedTo:self.view animated:true];
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
     imagePickerVC.allowsEditing = YES;
@@ -58,11 +60,15 @@
         UIAlertController *sourcePicker = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *pickCamera = [UIAlertAction actionWithTitle:@"Take picture" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
-            [self presentViewController:imagePickerVC animated:YES completion:nil];
+            [self presentViewController:imagePickerVC animated:YES completion:^{
+                [MBProgressHUD hideHUDForView:self.view animated:true];
+            }];
         }];
         UIAlertAction *pickLibrary = [UIAlertAction actionWithTitle:@"Select from photo library" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            [self presentViewController:imagePickerVC animated:YES completion:nil];
+            [self presentViewController:imagePickerVC animated:YES completion:^{
+                [MBProgressHUD hideHUDForView:self.view animated:true];
+            }];
         }];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}];
         [sourcePicker addAction:pickCamera];
@@ -72,7 +78,9 @@
     } else {
         NSLog(@"Camera unavailable so we will use photo library instead");
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        [self presentViewController:imagePickerVC animated:YES completion:nil];
+        [self presentViewController:imagePickerVC animated:YES completion:^{
+            [MBProgressHUD hideHUDForView:self.view animated:true];
+        }];
     }
 }
 
@@ -117,6 +125,7 @@
         [alert addAction:dismissAction];
         [self presentViewController:alert animated:YES completion:^{}];
     } else { // valid post
+        [MBProgressHUD showHUDAddedTo:self.view animated:true];
         NSString *caption = self.captionText.text;
         CGSize size = CGSizeMake(400, 400);
         UIImage *image = [self resizeImage:self.image withSize:size];
